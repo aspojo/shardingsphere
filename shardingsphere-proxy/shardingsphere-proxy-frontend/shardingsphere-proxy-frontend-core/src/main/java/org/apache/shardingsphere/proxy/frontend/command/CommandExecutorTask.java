@@ -93,7 +93,7 @@ public final class CommandExecutorTask implements Runnable {
         CommandPacket commandPacket = commandExecuteEngine.getCommandPacket(payload, type, connectionSession);
         CommandExecutor commandExecutor = commandExecuteEngine.getCommandExecutor(type, commandPacket, connectionSession);
         try {
-            Collection<DatabasePacket<?>> responsePackets = commandExecutor.execute();
+            Collection<DatabasePacket<?>> responsePackets = commandExecutor.execute(); // TODO:cl 根据分表规则改写sql
             if (responsePackets.isEmpty()) {
                 return false;
             }

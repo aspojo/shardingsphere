@@ -34,7 +34,8 @@ public final class MySQLInformationSchemaExecutorFactory {
     public static final String SCHEMATA_TABLE = "SCHEMATA";
     
     public static final List<String> DEFAULT_EXECUTOR_TABLES = Arrays.asList("ENGINES", "FILES", "VIEWS", "TRIGGERS", "PARTITIONS");
-    
+    public static final List<String> INFO_SCHEMA_EXECUTOR_TABLES = Arrays.asList("TABLES", "ROUTINES", "COLUMNS", "PARAMETERS", "STATISTICS");
+
     /**
      * Create executor.
      *
@@ -48,6 +49,8 @@ public final class MySQLInformationSchemaExecutorFactory {
             return new SelectInformationSchemataExecutor(sqlStatement, sql);
         } else if (DEFAULT_EXECUTOR_TABLES.contains(tableName.toUpperCase())) {
             return new DefaultDatabaseMetadataExecutor(sql);
+        } else if (INFO_SCHEMA_EXECUTOR_TABLES.contains(tableName.toUpperCase())){
+            return new DefaultDatabaseMetadataExecutor(sql.replace("sharding_db", "demo_ds_0"));
         }
         throw new UnsupportedOperationException(String.format("unsupported table : `%s`", tableName));
     }
